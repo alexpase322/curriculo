@@ -1,15 +1,20 @@
 package curriculo.proyectocurriculo.Controller;
 
+import curriculo.proyectocurriculo.Services.ProgramaService;
 import curriculo.proyectocurriculo.Services.RolService;
 import curriculo.proyectocurriculo.Services.UsuarioService;
+import curriculo.proyectocurriculo.dto.UsuarioDTO;
+import curriculo.proyectocurriculo.models.Programa;
 import curriculo.proyectocurriculo.models.Rol;
 import curriculo.proyectocurriculo.models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -17,11 +22,15 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
     private final RolService rolService;
+    private final ProgramaService programaService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService, RolService rolService) {
+    public UsuarioController(UsuarioService usuarioService, RolService rolService, ProgramaService programaService, PasswordEncoder passwordEncoder) {
         this.usuarioService = usuarioService;
         this.rolService = rolService;
+        this.programaService = programaService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/buscar/usuario")
@@ -37,8 +46,16 @@ public class UsuarioController {
 
 
     @PostMapping("/createUsuario")
-    public ResponseEntity<Usuario> crearUsuario(@RequestBody Usuario usuario) {
-        Usuario nuevoUsuario = usuarioService.guardarUsuario(usuario);
+    public ResponseEntity<Usuario> crearUsuario(@RequestBody UsuarioDTO usuario) {
+        Usuario nuevoUsuario = Usuario.builder()
+                .nombre(usuario.getNombre())
+                .apellido(usuario.getApellido())
+                .email(usuario.getEmail())
+                .contrasena(passwordEncoder.encode(usuario.getContrasena()))
+                .rol(rolService.buscarRolPorNombre(usuario.getNombreRol()))
+                .programa(programaService.findProgramaByName(usuario.getNombrePrograma()))
+                .build();
+        usuarioService.guardarUsuario(nuevoUsuario);
         return ResponseEntity.ok(nuevoUsuario);
     }
 
@@ -51,19 +68,20 @@ public class UsuarioController {
 
     // Buscar un rol por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Rol> obtenerRolPorId(@PathVariable Long id) {
+    public ResponseEntity<Rol> obtenerRolPorId(@PathVariable UUID id) {
         return rolService.buscarRolPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     // Buscar un rol por nombre
+    /*
     @GetMapping("/buscarRol")
     public ResponseEntity<Rol> obtenerRolPorNombre(@RequestParam String nombre) {
         return rolService.buscarRolPorNombre(nombre)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
+    }*/
 
     // Listar todos los roles
     @GetMapping("/listaRoles")
@@ -73,15 +91,22 @@ public class UsuarioController {
 
     // Eliminar un rol por ID
     @DeleteMapping("/eliminarRol/{id}")
-    public ResponseEntity<Void> eliminarRol(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminarRol(@PathVariable UUID id) {
         rolService.eliminarRol(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{idUsuario}/actualizar-rol/{idRol}")
-    public ResponseEntity<Usuario> actualizarRolDeUsuario(@PathVariable Long idUsuario, @PathVariable Long idRol) {
+    public ResponseEntity<Usuario> actualizarRolDeUsuario(@PathVariable Long idUsuario, @PathVariable UUID idRol) {
         return usuarioService.actualizarRolDeUsuario(idUsuario, idRol)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/programa/all_programas")
+    public ResponseEntity<List<Programa>> listarProgramas() {
+        return ResponseEntity.ok(programaService.getAllProgramas());
+    }
+
+
 }

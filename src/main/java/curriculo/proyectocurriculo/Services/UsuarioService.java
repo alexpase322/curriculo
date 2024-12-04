@@ -7,6 +7,7 @@ import curriculo.proyectocurriculo.models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UsuarioService {
@@ -36,7 +37,7 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    public Optional<Usuario> actualizarRolDeUsuario(Long idUsuario, Long idRol) {
+    public Optional<Usuario> actualizarRolDeUsuario(Long idUsuario, UUID idRol) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(idUsuario);
         Optional<Rol> rolOpt = rolRepository.findById(idRol);
 

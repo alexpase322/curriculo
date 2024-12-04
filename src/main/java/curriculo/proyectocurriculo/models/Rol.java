@@ -3,6 +3,8 @@ package curriculo.proyectocurriculo.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "rol")
 @Data
@@ -11,8 +13,8 @@ import lombok.*;
 public class Rol {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idRol;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID idRol;
 
     private String nombreRol;
 }

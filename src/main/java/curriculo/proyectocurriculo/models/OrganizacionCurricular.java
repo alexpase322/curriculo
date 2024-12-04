@@ -3,6 +3,8 @@ package curriculo.proyectocurriculo.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "organizacion_curricular")
 @Data
@@ -11,8 +13,8 @@ import lombok.*;
 public class OrganizacionCurricular {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idOrganizacion;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID idOrganizacion;
 
     @ManyToOne
     @JoinColumn(name = "id_programa", nullable = false)

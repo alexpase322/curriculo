@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class RolService {
@@ -24,12 +25,12 @@ public class RolService {
     }
 
     // Buscar un rol por su ID
-    public Optional<Rol> buscarRolPorId(Long id) {
+    public Optional<Rol> buscarRolPorId(UUID id) {
         return rolRepository.findById(id);
     }
 
     // Buscar un rol por su nombre
-    public Optional<Rol> buscarRolPorNombre(String nombreRol) {
+    public Rol buscarRolPorNombre(String nombreRol) {
         return rolRepository.findByNombreRol(nombreRol);
     }
 
@@ -39,7 +40,7 @@ public class RolService {
     }
 
     // Eliminar un rol por su ID
-    public void eliminarRol(Long id) {
+    public void eliminarRol(UUID id) {
         rolRepository.deleteById(id);
     }
 }

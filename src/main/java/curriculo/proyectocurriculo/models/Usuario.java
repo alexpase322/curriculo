@@ -5,17 +5,19 @@ import lombok.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Entity
 @Table(name = "usuario")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID idUsuario;
 
     private String nombre;
     private String apellido;
