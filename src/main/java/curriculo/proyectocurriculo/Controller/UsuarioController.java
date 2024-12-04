@@ -3,6 +3,7 @@ package curriculo.proyectocurriculo.Controller;
 import curriculo.proyectocurriculo.Services.ProgramaService;
 import curriculo.proyectocurriculo.Services.RolService;
 import curriculo.proyectocurriculo.Services.UsuarioService;
+import curriculo.proyectocurriculo.dto.ProgramaDTO;
 import curriculo.proyectocurriculo.dto.UsuarioDTO;
 import curriculo.proyectocurriculo.models.Programa;
 import curriculo.proyectocurriculo.models.Rol;
@@ -108,5 +109,35 @@ public class UsuarioController {
         return ResponseEntity.ok(programaService.getAllProgramas());
     }
 
+    @PostMapping(value = "/programa/create", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<Programa> crearPrograma(@RequestBody ProgramaDTO programa) {
+        Programa programaCreated = Programa.builder()
+                .nombrePrograma(programa.getNombrePrograma())
+                .jornada(programa.getJornada())
+                .modalidad(programa.getModalidad())
+                .duracionEstimada(programa.getDuracionEstimada())
+                .nivelFormacion(programa.getNivelFormacion())
+                .numeroCreditos(programa.getNumeroCreditos())
+                .tituloOtorgado(programa.getTituloOtorgado())
+                .build();
+        return ResponseEntity.ok(programaService.crearPrograma(programaCreated));
+    }
 
+    @PutMapping(value = "/programa/edit/", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<Programa> editarPrograma(@RequestParam UUID idPrograma, @RequestBody ProgramaDTO programaEdit) {
+        Programa programaFound = programaService.getPrograma(idPrograma);
+        programaFound.setNombrePrograma(programaEdit.getNombrePrograma());
+        programaFound.setJornada(programaEdit.getJornada());
+        programaFound.setModalidad(programaEdit.getModalidad());
+        programaFound.setNumeroCreditos(programaEdit.getNumeroCreditos());
+        programaFound.setTituloOtorgado(programaEdit.getTituloOtorgado());
+        programaFound.setDuracionEstimada(programaEdit.getDuracionEstimada());
+        programaFound.setNivelFormacion(programaEdit.getNivelFormacion());
+        return ResponseEntity.ok(programaService.actualizarPrograma(programaFound));
+    }
+
+    @DeleteMapping(value = "/delete/programa")
+    public void eliminarPrograma(@RequestParam UUID idPrograma) {
+        programaService.eliminarProgramaById(idPrograma);
+    }
 }

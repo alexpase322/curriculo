@@ -17,6 +17,10 @@ public class ProgramaService {
         this.programaRepository = programaRepository;
     }
 
+    public Programa crearPrograma(Programa programa) {
+        return programaRepository.save(programa);
+    }
+
     public Programa getPrograma(UUID id) {
         return programaRepository.findById(id).orElse(null);
     }

@@ -2,6 +2,7 @@ package curriculo.proyectocurriculo.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "Programa")
 @Entity
+@Builder
 public class Programa {
 
     @Id
@@ -25,6 +27,6 @@ public class Programa {
     private String duracionEstimada;
     private Integer numeroCreditos;
     private String jornada;
-    // Getters y Setters
+
 }
 
