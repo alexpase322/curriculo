@@ -1,7 +1,6 @@
 package curriculo.proyectocurriculo.Utils;
 
 import curriculo.proyectocurriculo.Repository.UsuarioRepository;
-import curriculo.proyectocurriculo.models.Rol;
 import curriculo.proyectocurriculo.models.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

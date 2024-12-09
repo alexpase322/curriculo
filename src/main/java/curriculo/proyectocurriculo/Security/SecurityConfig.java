@@ -39,7 +39,10 @@ public class SecurityConfig {
                 .csrf(config -> config.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/login").permitAll();
-                    auth.requestMatchers("/register").permitAll();
+                    auth.requestMatchers("/api/usuarios/programa/create").permitAll();
+                    auth.requestMatchers("/api/usuarios/createUsuario").permitAll();
+                    auth.requestMatchers("/api/usuarios/createUsuario").permitAll();
+                    auth.requestMatchers("/api/usuarios/createRol").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> {
