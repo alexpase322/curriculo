@@ -76,13 +76,10 @@ public class UsuarioController {
     }
 
     // Buscar un rol por nombre
-    /*
     @GetMapping("/buscarRol")
     public ResponseEntity<Rol> obtenerRolPorNombre(@RequestParam String nombre) {
-        return rolService.buscarRolPorNombre(nombre)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }*/
+        return ResponseEntity.ok(rolService.buscarRolPorNombre(nombre));
+    }
 
     // Listar todos los roles
     @GetMapping("/listaRoles")
@@ -140,4 +137,6 @@ public class UsuarioController {
     public void eliminarPrograma(@RequestParam UUID idPrograma) {
         programaService.eliminarProgramaById(idPrograma);
     }
+
+
 }
