@@ -32,4 +32,5 @@ public class Curso {
     private String unidadResponsable;
     private String presentacion;
     private String justificacion;
+    private Integer periodoAcademico;
 }

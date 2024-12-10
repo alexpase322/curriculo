@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -27,6 +28,8 @@ public class Programa {
     private String duracionEstimada;
     private Integer numeroCreditos;
     private String jornada;
-
+    private String periocidad;
+    @OneToMany(mappedBy = "programa", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Sede> sedes;
 }
 
