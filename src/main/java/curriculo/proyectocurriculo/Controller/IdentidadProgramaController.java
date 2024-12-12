@@ -4,6 +4,7 @@ import curriculo.proyectocurriculo.Services.IdentidadProgramaService;
 import curriculo.proyectocurriculo.models.IdentidadPrograma;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/identidades-programas")
+@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 public class IdentidadProgramaController {
 
     private final IdentidadProgramaService identidadProgramaService;

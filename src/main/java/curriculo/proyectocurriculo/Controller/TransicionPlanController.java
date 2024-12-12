@@ -4,6 +4,7 @@ import curriculo.proyectocurriculo.Services.TransicionPlanService;
 import curriculo.proyectocurriculo.models.TransicionPlan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/transiciones-plan")
+@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 public class TransicionPlanController {
 
     private final TransicionPlanService transicionPlanService;

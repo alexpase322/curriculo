@@ -24,11 +24,14 @@ public class Programa {
     private String nombrePrograma;
     private String tituloOtorgado;
     private String nivelFormacion;
+    private String areaConocimientoAmplio;
+    private String areaConocimientoEspecifico;
     private String modalidad;
     private String duracionEstimada;
     private Integer numeroCreditos;
     private String jornada;
     private String periocidad;
+    private String normaCreacion;
     @OneToMany(mappedBy = "programa", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Sede> sedes;
 }

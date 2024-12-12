@@ -23,9 +23,6 @@ public class UserDetailServiceImplement implements UserDetailsService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @PersistenceContext
-    EntityManager entityManager;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario userEntity =  usuarioRepository.findByEmail(username);

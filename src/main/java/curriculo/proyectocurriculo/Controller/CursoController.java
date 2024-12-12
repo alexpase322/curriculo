@@ -4,6 +4,7 @@ import curriculo.proyectocurriculo.Services.CursoService;
 import curriculo.proyectocurriculo.models.Curso;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/cursos")
+@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 public class CursoController {
 
     private final CursoService cursoService;
